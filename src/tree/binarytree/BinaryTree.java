@@ -13,6 +13,7 @@ public class BinaryTree {
     Node root;
     public BinaryTree(){
 
+
     }
 
     class Node{
@@ -35,22 +36,18 @@ public class BinaryTree {
             height++;
         }
         else{
-            addTraval(this.root, value);
+            addNode(this.root, value);
             size++;
         }
     }
-    void addTraval(Node node, int value){
-        if(node == null) {
-            Node newNode = new Node(value);
-            node = newNode;
-        }
-        else if(node.value >= value){
+    void addNode(Node node, int value){
+        if(node.value >= value){
             if(node.left == null){
                 Node newNode = new Node(value);
                 node.left = newNode;
                 return;
             }else
-                addTraval(node.left, value);
+                addNode(node.left, value);
         }
         else{
             if(node.right == null) {
@@ -59,21 +56,61 @@ public class BinaryTree {
                 return;
             }
             else
-                addTraval(node.right, value);
+                addNode(node.right, value);
         }
     }
 
-    void viewTraval(){
-        traval(this.root);
+    void treverse(){
+        traverseInOrder(this.root);
     }
 
-    void traval(Node node){
+    void traverse(TraverseOrder traverseOrder){
+        switch (traverseOrder) {
+            case PRE:
+                traversePreOrder(this.root);
+                System.out.println();
+                break;
+            case IN:
+                traverseInOrder(this.root);
+                System.out.println();
+                break;
+            case POST:
+                traversePostOrder(this.root);
+                System.out.println();
+                break;
+        }
+    }
+
+
+
+    void traversePostOrder(Node node){
         if(node == null)
             return;
         else{
-            traval(node.left);
-            System.out.println(node.value);
-            traval(node.right);
+            traversePostOrder(node.left);
+            traversePostOrder(node.right);
+            System.out.print(node.value+" ");
+        }
+
+    }
+
+    void traversePreOrder(Node node){
+        if(node == null)
+            return;
+        else{
+            System.out.print(node.value+" ");
+            traversePreOrder(node.left);
+            traversePreOrder(node.right);
+        }
+
+    }
+    void traverseInOrder(Node node){
+        if (node == null)
+            return;
+        else {
+            traverseInOrder(node.left);
+            System.out.print(node.value+" ");
+            traverseInOrder(node.right);
         }
 
     }
